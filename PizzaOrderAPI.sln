@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaOrderAPI", "PizzaOrderAPI\PizzaOrderAPI.csproj", "{4B2EC1C1-D28C-46DA-A81C-2D48DC4282FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaOrderAPI", "PizzaOrderAPI\PizzaOrderAPI.csproj", "{4B2EC1C1-D28C-46DA-A81C-2D48DC4282FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pizzaorder.Data", "pizzaorder.Data\pizzaorder.Data.csproj", "{BA833E84-7A43-480D-AC04-97A65E74A260}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pizzaorder.Logic", "pizzaorder.Logic\pizzaorder.Logic.csproj", "{2C7B5B9C-02C2-43C1-ABA7-F2E366ACFA3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{4B2EC1C1-D28C-46DA-A81C-2D48DC4282FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B2EC1C1-D28C-46DA-A81C-2D48DC4282FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B2EC1C1-D28C-46DA-A81C-2D48DC4282FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA833E84-7A43-480D-AC04-97A65E74A260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA833E84-7A43-480D-AC04-97A65E74A260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA833E84-7A43-480D-AC04-97A65E74A260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA833E84-7A43-480D-AC04-97A65E74A260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C7B5B9C-02C2-43C1-ABA7-F2E366ACFA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7B5B9C-02C2-43C1-ABA7-F2E366ACFA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7B5B9C-02C2-43C1-ABA7-F2E366ACFA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7B5B9C-02C2-43C1-ABA7-F2E366ACFA3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
