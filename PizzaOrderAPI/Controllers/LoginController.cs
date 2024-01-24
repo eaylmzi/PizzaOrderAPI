@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using pizzaorder.Logic.Logics.Baskets;
 using pizzaorder.Logic.Logics.Users;
-using PizzaOrderAPI.Services.LoginServices;
 
 namespace PizzaOrderAPI.Controllers
 {

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\pizzaorder.Data\pizzaorder.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,9 @@
 
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using pizzaorder.Data.Repositories.Baskets;
 using pizzaorder.Data.Repositories.Discounts;
 using pizzaorder.Data.Repositories.Ingredients;
@@ -15,6 +18,9 @@ using pizzaorder.Logic.Logics.Orders;
 using pizzaorder.Logic.Logics.PizzaIngredients;
 using pizzaorder.Logic.Logics.Pizzas;
 using pizzaorder.Logic.Logics.Users;
+using PizzaOrderAPI.Services.SecurityServices.Jwt.Models;
+using Swashbuckle.AspNetCore.Filters;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +61,43 @@ builder.Services.AddApiVersioning(opt =>
                                                     new MediaTypeApiVersionReader("x-api-version"));
 });
 
+//JWT
+var jwtSection = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(jwt =>
+{
+    jwt.SaveToken = true;
+    jwt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSection.Issuer,
+        ValidAudience = jwtSection.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection.Key))
+    };
+});
+builder.Services.AddAuthorization();
+
+// Adds a security definition named "oauth2" to Swagger, specifying an OAuth 2.0-based authorization scheme.
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer scheme(\"Bearer{token}\")",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,7 +106,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
