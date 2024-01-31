@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Data.Repositories.RepositoriesBase
+namespace PizzaOrderAPI.Data.Repositories.RepositoriesBase
 {
     public class RepositoryBase<T>: IRepositoryBase<T> where T : class
     {
@@ -74,11 +74,11 @@ namespace pizzaorder.Data.Repositories.RepositoriesBase
                 {
                     return entity;
                 }
-                return entity;
+                return default(T);
             }
             catch (Exception)
             {
-                return null;
+                return default(T);
             }
         }
         // Queries for an entity that satisfies both given conditions and returns it.
@@ -94,7 +94,7 @@ namespace pizzaorder.Data.Repositories.RepositoriesBase
                 {
                     return entity;
                 }
-                return entity;
+                return default(T);
             }
             catch (Exception)
             {
@@ -118,7 +118,7 @@ namespace pizzaorder.Data.Repositories.RepositoriesBase
                     return updatedEntity;
                 }
 
-                return null;
+                return default(T);
 
             }
             catch (Exception)
@@ -139,7 +139,7 @@ namespace pizzaorder.Data.Repositories.RepositoriesBase
                     return updatedEntity;
                 }
 
-                return null;
+                return default(T);
 
             }
             catch (Exception)

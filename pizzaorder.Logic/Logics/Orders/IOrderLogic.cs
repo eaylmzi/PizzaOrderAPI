@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Logic.Logics.Orders
+namespace PizzaOrderAPI.Logic.Logics.Orders
 {
     public interface IOrderLogic
     {

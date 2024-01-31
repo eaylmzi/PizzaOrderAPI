@@ -1,12 +1,12 @@
-﻿using pizzaorder.Data.Repositories.Ingredients;
-using pizzaorder.Data.Repositories.Orders;
+﻿using PizzaOrderAPI.Data.Repositories.Ingredients;
+using PizzaOrderAPI.Data.Repositories.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Logic.Logics.Orders
+namespace PizzaOrderAPI.Logic.Logics.Orders
 {
     public class OrderLogic : IOrderLogic
     {

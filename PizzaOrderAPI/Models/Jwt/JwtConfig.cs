@@ -1,4 +1,4 @@
-﻿namespace PizzaOrderAPI.Services.SecurityServices.Jwt.Models
+﻿namespace PizzaOrderAPI.Models.Jwt
 {
     public class JwtConfig
     {

@@ -1,11 +1,11 @@
-﻿using pizzaorder.Data.Repositories.PizzaIngredients;
+﻿using PizzaOrderAPI.Data.Repositories.PizzaIngredients;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Logic.Logics.Pizzas
+namespace PizzaOrderAPI.Logic.Logics.Pizzas
 {
     public class PizzaLogic : IPizzaLogic
     {

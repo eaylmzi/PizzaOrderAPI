@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaOrderAPI.Logic.Logics.Baskets
+namespace PizzaOrderAPI.Services.Login
 {
-    public interface IBasketLogic
+    public interface ILoginService
     {
     }
 }

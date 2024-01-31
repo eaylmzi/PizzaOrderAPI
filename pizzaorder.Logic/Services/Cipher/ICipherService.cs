@@ -1,4 +1,4 @@
-﻿namespace PizzaOrderAPI.Services.SecurityServices.Cipher
+﻿namespace pizzaorder.Logic.Services.Cipher
 {
     public interface ICipherService
     {

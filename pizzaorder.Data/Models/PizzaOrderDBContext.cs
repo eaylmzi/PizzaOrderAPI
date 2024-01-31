@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using pizzaorder.Data.Services.ConfigurationServices;
+using PizzaOrderAPI.Data.Services.ConfigurationServices;
 using PizzaOrder.Data.Models;
 
 namespace PizzaOrder.Data.Models
@@ -42,7 +42,6 @@ namespace PizzaOrder.Data.Models
                 entity.ToTable("basket");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.CustomizedPizzaUuid)
@@ -67,7 +66,6 @@ namespace PizzaOrder.Data.Models
                 entity.ToTable("discount");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.DiscountRate).HasColumnName("discount_rate");
@@ -86,7 +84,6 @@ namespace PizzaOrder.Data.Models
                 entity.ToTable("ingredient");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Image)
@@ -111,7 +108,6 @@ namespace PizzaOrder.Data.Models
                 entity.ToTable("order");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.CustomizedPizza)
@@ -137,7 +133,6 @@ namespace PizzaOrder.Data.Models
                 entity.ToTable("pizza");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Image)
@@ -155,7 +150,6 @@ namespace PizzaOrder.Data.Models
                 entity.ToTable("pizza_ingredient");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.IngredientId).HasColumnName("ingredient_id");
@@ -168,7 +162,6 @@ namespace PizzaOrder.Data.Models
                 entity.ToTable("user");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Address)

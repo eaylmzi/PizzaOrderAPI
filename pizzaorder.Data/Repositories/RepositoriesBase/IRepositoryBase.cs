@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Data.Repositories.RepositoriesBase
+namespace PizzaOrderAPI.Data.Repositories.RepositoriesBase
 {
     public interface IRepositoryBase<T> where T : class
     {

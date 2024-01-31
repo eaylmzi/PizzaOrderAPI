@@ -1,4 +1,4 @@
-﻿namespace PizzaOrderAPI.Services.SecurityServices.Jwt.Resources
+﻿namespace PizzaOrderAPI.Resources.Jwt
 {
     public static class Role
     {

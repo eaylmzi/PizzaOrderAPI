@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace PizzaOrderAPI.Services.SecurityServices.Cipher
+namespace pizzaorder.Logic.Services.Cipher
 {
     public class CipherService : ICipherService
     {

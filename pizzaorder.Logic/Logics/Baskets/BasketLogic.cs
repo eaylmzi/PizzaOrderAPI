@@ -1,11 +1,11 @@
-﻿using pizzaorder.Data.Repositories.Baskets;
+﻿using PizzaOrderAPI.Data.Repositories.Baskets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Logic.Logics.Baskets
+namespace PizzaOrderAPI.Logic.Logics.Baskets
 {
     public class BasketLogic : IBasketLogic
     {
