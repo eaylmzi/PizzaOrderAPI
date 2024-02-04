@@ -1,4 +1,4 @@
-﻿using pizzaorder.Logic.DTOs.Login;
+﻿using pizzaorder.Data.DTOs.Login;
 using PizzaOrderAPI.Logic.DTOs.Login;
 using PizzaOrderAPI.Logic.Models.ApiResponses;
 using System;

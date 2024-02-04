@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using pizzaorder.Logic.DTOs.Login;
-using pizzaorder.Logic.Resources.Messages;
-using pizzaorder.Logic.Services.Cipher;
+using pizzaorder.Data.DTOs.Login;
+using pizzaorder.Data.Resources.Messages;
+using pizzaorder.Data.Services.Cipher;
 using PizzaOrder.Data.Models;
 using PizzaOrderAPI.Data.Repositories.Users;
 using PizzaOrderAPI.Logic.DTOs.Login;
 using PizzaOrderAPI.Logic.Models.ApiResponses;
 
-namespace pizzaorder.Logic.Services.Login
+namespace pizzaorder.Data.Services.Login
 {
     public class LoginService : ILoginService
     {

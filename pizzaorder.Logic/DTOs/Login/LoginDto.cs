@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Logic.DTOs.Login
+namespace pizzaorder.Data.DTOs.Login
 {
     public class LoginDto
     {

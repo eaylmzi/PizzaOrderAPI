@@ -57,6 +57,17 @@ namespace PizzaOrderAPI.Data.Repositories.RepositoriesBase
                       .ToList();
             return list;
         }
+
+        public List<T>? GetWithPagination(Func<T, bool> method, int page, float pageResult)
+        {
+            var pageCount = Math.Ceiling(query.Where(method).Count() / pageResult);
+            var list = query
+                      .Where(method)
+                      .Skip((page - 1) * (int)pageResult)
+                      .Take((int)pageResult)
+                      .ToList();
+            return list;
+        }
         // Finds and returns a single entity based on the provided unique identifier.
         public T? GetSingle(int number)
         {

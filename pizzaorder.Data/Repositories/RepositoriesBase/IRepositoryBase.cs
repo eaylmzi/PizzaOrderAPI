@@ -13,6 +13,7 @@ namespace PizzaOrderAPI.Data.Repositories.RepositoriesBase
         public Task<T?> UpdateAsync(Func<T, bool> method, T updatedEntity);
         public Task<T?> UpdateAsync(T? entity, T updatedEntity);
         public List<T>? Get(Func<T, bool> method);
+        public List<T>? GetWithPagination(Func<T, bool> method, int page, float pageResult);
         public T? GetSingle(int number);
         public T? GetSingleByMethod(Func<T, bool> method);
         public T? GetSingleByMethod(Func<T, bool> method, Func<T, bool> method2);

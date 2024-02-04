@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using pizzaorder.Logic.Services.Cipher;
-using pizzaorder.Logic.Services.Login;
+using pizzaorder.Data.Services.Cipher;
+using pizzaorder.Data.Services.Image;
+using pizzaorder.Data.Services.Login;
+using pizzaorder.Data.Services.Pagination;
+using pizzaorder.Data.Services.Pizza;
 using PizzaOrderAPI.Data.Repositories.Baskets;
 using PizzaOrderAPI.Data.Repositories.Discounts;
 using PizzaOrderAPI.Data.Repositories.Ingredients;
@@ -57,6 +60,10 @@ builder.Services.AddScoped<IPizzaLogic, PizzaLogic>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IPizzaService, PizzaService>();
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped(typeof(IPaginationService<>), typeof(PaginationService<>));
+
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ICipherService, CipherService>();
 

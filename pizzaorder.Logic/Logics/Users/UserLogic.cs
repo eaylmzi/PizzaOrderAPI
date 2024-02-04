@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 using PizzaOrderAPI.Logic.Models.ApiResponses;
 using AutoMapper;
 using PizzaOrder.Data.Models;
-using pizzaorder.Logic.Services.Login;
-using pizzaorder.Logic.Resources.Messages;
-using pizzaorder.Logic.DTOs.Login;
+using pizzaorder.Data.Services.Login;
+using pizzaorder.Data.Resources.Messages;
+using pizzaorder.Data.DTOs.Login;
 using System.Xml.Linq;
-using pizzaorder.Logic.Services.Cipher;
+using pizzaorder.Data.Services.Cipher;
 
 namespace PizzaOrderAPI.Logic.Logics.Users
 {

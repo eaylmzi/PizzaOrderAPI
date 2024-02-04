@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IISIntegration;
-using pizzaorder.Logic.DTOs.Login;
+using pizzaorder.Data.DTOs.Login;
 using PizzaOrderAPI.Logic.DTOs.Login;
 using PizzaOrderAPI.Logic.Logics.Users;
 using PizzaOrderAPI.Logic.Models.ApiResponses;

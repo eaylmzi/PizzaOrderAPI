@@ -1,4 +1,4 @@
-﻿using pizzaorder.Logic.DTOs.Login;
+﻿using pizzaorder.Data.DTOs.Login;
 using PizzaOrder.Data.Models;
 using PizzaOrderAPI.Logic.DTOs.Login;
 using PizzaOrderAPI.Logic.Models.ApiResponses;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Logic.Services.Login
+namespace pizzaorder.Data.Services.Login
 {
     public interface ILoginService
     {
