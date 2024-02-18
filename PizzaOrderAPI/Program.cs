@@ -1,8 +1,12 @@
 
 
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using pizzaorder.Data.Services.Cipher;
@@ -10,6 +14,7 @@ using pizzaorder.Data.Services.Image;
 using pizzaorder.Data.Services.Login;
 using pizzaorder.Data.Services.Pagination;
 using pizzaorder.Data.Services.Pizza;
+using PizzaOrder.Data.Models;
 using PizzaOrderAPI.Data.Repositories.Baskets;
 using PizzaOrderAPI.Data.Repositories.Discounts;
 using PizzaOrderAPI.Data.Repositories.Ingredients;
@@ -26,7 +31,9 @@ using PizzaOrderAPI.Logic.Logics.Pizzas;
 using PizzaOrderAPI.Logic.Logics.Users;
 using PizzaOrderAPI.Logic.Services.Mapper;
 using PizzaOrderAPI.Models.Jwt;
+using PizzaOrderAPI.Services.Health;
 using PizzaOrderAPI.Services.SecurityServices.Jwt;
+using ServiceStack;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
@@ -67,6 +74,8 @@ builder.Services.AddScoped(typeof(IPaginationService<>), typeof(PaginationServic
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ICipherService, CipherService>();
 
+string sqlConnection = builder.Configuration.GetSection("Connection:SQLServer").Get<string>();
+string healthCheckConnection = builder.Configuration.GetSection("Connection:HealthCheck").Get<string>();
 //Api versioning
 builder.Services.AddApiVersioning(opt =>
 {
@@ -114,15 +123,49 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddDbContext<PizzaOrderDBContext>(options =>
+        options.UseSqlServer(connectionString: sqlConnection));
 
+//Health Check
+builder.Services.AddHealthChecksUI()
+    .AddSqlServerStorage(connectionString: healthCheckConnection);
+ builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseHealthCheck>("Database");
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+                           policy.AllowAnyOrigin()
+                                 .AllowAnyHeader()
+                                 .AllowAnyMethod();
+        });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
+//Health Check
+app.UseHealthChecksUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    options.UIPath = "/health-ui";
 }
+);
+
+app.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
