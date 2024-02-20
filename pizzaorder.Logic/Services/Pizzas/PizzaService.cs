@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using pizzaorder.Data.DTOs.Pizza;
 using pizzaorder.Data.Resources.Messages;
 using pizzaorder.Data.Services.Image;
+using pizzaorder.Logic.DTOs.Pizza;
 using PizzaOrder.Data.Models;
 using PizzaOrderAPI.Data.Repositories.Ingredients;
 using PizzaOrderAPI.Data.Repositories.Pizzas;
@@ -14,7 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Data.Services.Pizza
+namespace pizzaorder.Data.Services.Pizzas
 {
     public class PizzaService : IPizzaService
     {
@@ -31,11 +32,76 @@ namespace pizzaorder.Data.Services.Pizza
             _imageService = imageService;
             _ingredientRepository = ingredientRepository;
         }
-
-        public Response<PizzaDetailDto> AddPizza()
+        /// <summary>
+        /// Creates a Pizza object from a PizzaDto object.
+        /// </summary>
+        /// <param name="pizzaDto">The PizzaDto object containing pizza data.</param>
+        /// <returns>A Pizza object populated with data from the PizzaDto object.</returns>
+        private Pizza CreatePizzaFromDto(PizzaDto pizzaDto)
         {
-            return null;
+            // Create a new Pizza object
+            Pizza pizza = new Pizza()
+            {
+                Name = pizzaDto.Name
+            };
+
+            // Convert the image of the pizza from the PizzaDto object to a string 
+            pizza.Image = _imageService.ConvertImageToString(pizzaDto.Image);
+
+            // Return the populated Pizza object
+            return pizza;
         }
+        /// <summary>
+        /// Adds a pizza to the repository and creates a response based on the operation result.
+        /// </summary>
+        /// <param name="pizza">The Pizza object to be added.</param>
+        /// <param name="ingredientIdList">The list of ingredient IDs for the pizza.</param>
+        /// <returns>A response containing either success message and pizza details or failure message.</returns>
+        private Response<PizzaDetailDto> AddPizzaAndCreateResponse(Pizza pizza, List<int> ingredientIdList)
+        {
+            // Adds the provided pizza along with its ingredients to the repository.
+            Pizza addedPizza = _pizzaRepository.CreatePizza(pizza, ingredientIdList);
+
+            // Checks if the pizza was successfully added to the repository.
+            if (addedPizza.Id <= 0)
+            {
+                // Returns a failure message response if the pizza addition failed.
+                return Response<PizzaDetailDto>.CreateFailureMessage(Error.PIZZA_NOT_ADDED_MESSAGE);
+            }
+
+            // Maps the added pizza details to a PizzaDetailDto object.
+            PizzaDetailDto pizzaDetailDto = _mapper.Map<PizzaDetailDto>(pizza);
+            pizzaDetailDto.IngredientIdList = ingredientIdList;
+
+            // Creates a success message response with the pizza details.
+            return Response<PizzaDetailDto>.CreateSuccessMessage(pizzaDetailDto, Success.PIZZA_ADDED_SUCCESS_MESSAGE);
+        }
+        /// <summary>
+        /// Creates a new pizza based on the provided PizzaDto object, adds it to the repository, and returns a response.
+        /// </summary>
+        /// <param name="pizzaDto">The PizzaDto object containing pizza details.</param>
+        /// <returns>A response containing either success message and pizza details or failure message.</returns>
+        public Response<PizzaDetailDto> CreatePizza(PizzaDto pizzaDto)
+        {
+            // Check if a pizza with the same name already exists.
+            bool isPizzaExist = _pizzaRepository.IsPizzaExist(pizzaDto.Name);
+            if (isPizzaExist)
+            {
+                // Returns a failure message response if the pizza already exists.
+                return Response<PizzaDetailDto>.CreateFailureMessage(Error.PIZZA_ALREADY_ADDED_MESSAGE);
+            }
+
+            // Creates a new Pizza object from the provided PizzaDto.
+            Pizza pizza = CreatePizzaFromDto(pizzaDto);
+
+            // Adds the pizza to the repository and creates a response based on the operation result.
+            Response<PizzaDetailDto> addingPizzaResult = AddPizzaAndCreateResponse(pizza, pizzaDto.IngredientIdList);
+
+            return addingPizzaResult;
+        }
+
+        //-----------------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// Creates an Ingredient object from the provided IngredientDto.
         /// </summary>

@@ -14,6 +14,9 @@
         public const string INGREDIENT_ALREADY_ADDED_MESSAGE = "This ingredient has already been added.";
         public const string INGREDIENT_LIST_NOT_FOUND_MESSAGE = "Ingredient list is empty.";
 
+        //Pizza
+        public const string PIZZA_ALREADY_ADDED_MESSAGE = "This pizza has already been added.";
+        public const string PIZZA_NOT_ADDED_MESSAGE = "Pizza could not be added.";
 
     }
 

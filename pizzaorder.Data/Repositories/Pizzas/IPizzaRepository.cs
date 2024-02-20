@@ -10,5 +10,7 @@ namespace PizzaOrderAPI.Data.Repositories.Pizzas
 {
     public interface IPizzaRepository : IRepositoryBase<Pizza>
     {
+        public bool IsPizzaExist(string pizzaName);
+        public Pizza CreatePizza(Pizza pizza, List<int> ingredientIdList);
     }
 }

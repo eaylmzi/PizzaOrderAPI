@@ -36,9 +36,5 @@
     <ProjectReference Include="..\pizzaorder.Logic\pizzaorder.Logic.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Resources\NewFolder\" />
-  </ItemGroup>
-
 
 </Project>

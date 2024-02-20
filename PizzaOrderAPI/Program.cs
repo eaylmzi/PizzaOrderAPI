@@ -13,7 +13,7 @@ using pizzaorder.Data.Services.Cipher;
 using pizzaorder.Data.Services.Image;
 using pizzaorder.Data.Services.Login;
 using pizzaorder.Data.Services.Pagination;
-using pizzaorder.Data.Services.Pizza;
+using pizzaorder.Data.Services.Pizzas;
 using PizzaOrder.Data.Models;
 using PizzaOrderAPI.Data.Repositories.Baskets;
 using PizzaOrderAPI.Data.Repositories.Discounts;

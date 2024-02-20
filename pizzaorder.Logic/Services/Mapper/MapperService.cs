@@ -2,6 +2,7 @@
 using PizzaOrderAPI.Logic.DTOs.Login;
 using PizzaOrder.Data.Models;
 using pizzaorder.Data.DTOs.Pizza;
+using pizzaorder.Logic.DTOs.Pizza;
 
 namespace PizzaOrderAPI.Logic.Services.Mapper
 {
@@ -14,6 +15,9 @@ namespace PizzaOrderAPI.Logic.Services.Mapper
 
            CreateMap<IngredientDto, Ingredient>();
            CreateMap<Ingredient, IngredientDetailDto>();
+
+            CreateMap<PizzaDto, Pizza>();
+            CreateMap<Pizza, PizzaDetailDto>();
         }
     }
 

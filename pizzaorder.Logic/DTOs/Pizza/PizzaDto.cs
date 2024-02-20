@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pizzaorder.Data.DTOs.Pizza
+namespace pizzaorder.Logic.DTOs.Pizza
 {
-    public class PizzaDetailDto
+    public class PizzaDto
     {
-        public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public byte[] Image { get; set; } = null!;
+        public IFormFile Image { get; set; } = null!;
         public List<int> IngredientIdList { get; set; } = null!;
     }
 }

@@ -1,5 +1,5 @@
 ﻿using pizzaorder.Data.DTOs.Pizza;
-using pizzaorder.Data.Services.Pizza;
+using pizzaorder.Data.Services.Pizzas;
 
 using PizzaOrderAPI.Data.Repositories.Baskets;
 using PizzaOrderAPI.Data.Repositories.Ingredients;

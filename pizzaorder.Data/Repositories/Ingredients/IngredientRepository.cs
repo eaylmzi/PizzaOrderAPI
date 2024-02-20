@@ -13,15 +13,16 @@ namespace PizzaOrderAPI.Data.Repositories.Ingredients
 {
     public class IngredientRepository : RepositoryBase<Ingredient>, IIngredientRepository 
     {
-        PizzaOrderDBContext _context = new PizzaOrderDBContext();
+        private readonly PizzaOrderDBContext _context;
         private DbSet<Ingredient> query { get; set; }
-        public IngredientRepository()
+        public IngredientRepository(PizzaOrderDBContext context)
         {
+            _context = context;
             query = _context.Set<Ingredient>();
         }
         public bool IsIngredientExist(string ingredientName)
         {
-            // Checks if there is a record in the Users table matching the specified email address.
+            // Checks if there is a record in the Ingredient table matching the specified ingredient name.
             return query.Any(u => u.Name == ingredientName);
         }
 

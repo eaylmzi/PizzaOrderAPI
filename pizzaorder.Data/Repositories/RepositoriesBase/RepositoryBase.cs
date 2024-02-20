@@ -34,6 +34,7 @@ namespace PizzaOrderAPI.Data.Repositories.RepositoriesBase
             }
             return -1;
         }
+
         // Queries for an entity that satisfies the given condition, removes it if found, and saves the changes.
         // Returns true if the entity was deleted, or false if no entity was found.
         public bool Delete(Func<T, bool> method)
