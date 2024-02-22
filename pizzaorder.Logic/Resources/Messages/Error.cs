@@ -17,6 +17,8 @@
         //Pizza
         public const string PIZZA_ALREADY_ADDED_MESSAGE = "This pizza has already been added.";
         public const string PIZZA_NOT_ADDED_MESSAGE = "Pizza could not be added.";
+        public const string PIZZA_LIST_NOT_FOUND_MESSAGE = "Pizza list is empty.";
+        public const string PIZZA_NOT_FOUND_MESSAGE = "Pizza is not found.";
 
     }
 

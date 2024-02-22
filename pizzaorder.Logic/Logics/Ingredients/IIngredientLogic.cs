@@ -13,6 +13,7 @@ namespace PizzaOrderAPI.Logic.Logics.Ingredients
     public interface IIngredientLogic
     {
         public Response<IngredientDetailDto> AddIngredient(IngredientDto ingredientDto);
-        public Response<ListPaginationDto<Ingredient>> GetIngredient(IngredientTypeDto ingredientTypeDto);
+        public Response<ListPaginationDto<Ingredient>> GetAllIngredient(IngredientTypeDto ingredientTypeDto);
+        public Response<List<Ingredient>> GetIngredientList(List<int> ingredientIdList);
     }
 }

@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using pizzaorder.Data.DTOs.Pagination;
 using pizzaorder.Data.DTOs.Pizza;
 using pizzaorder.Data.Resources.Messages;
 using pizzaorder.Data.Services.Image;
+using pizzaorder.Data.Services.Pagination;
 using pizzaorder.Logic.DTOs.Pizza;
 using PizzaOrder.Data.Models;
 using PizzaOrderAPI.Data.Repositories.Ingredients;
+using PizzaOrderAPI.Data.Repositories.PizzaIngredients;
 using PizzaOrderAPI.Data.Repositories.Pizzas;
 using PizzaOrderAPI.Logic.Models.ApiResponses;
 using System;
@@ -24,13 +28,15 @@ namespace pizzaorder.Data.Services.Pizzas
         private readonly IIngredientRepository _ingredientRepository;
         private readonly IMapper _mapper;
         private readonly IImageService _imageService;
+        private readonly IPizzaIngredientRepository _pizzaIngredientRepository;
 
-        public PizzaService(IPizzaRepository pizzaRepository, IMapper mapper, IImageService imageService, IIngredientRepository ingredientRepository)
+        public PizzaService(IPizzaRepository pizzaRepository, IMapper mapper, IImageService imageService, IIngredientRepository ingredientRepository, IPizzaIngredientRepository pizzaIngredientRepository)
         {
             _pizzaRepository = pizzaRepository;
             _mapper = mapper;
             _imageService = imageService;
             _ingredientRepository = ingredientRepository;
+            _pizzaIngredientRepository = pizzaIngredientRepository;
         }
         /// <summary>
         /// Creates a Pizza object from a PizzaDto object.
@@ -171,6 +177,106 @@ namespace pizzaorder.Data.Services.Pizzas
 
             // Return the result of adding the ingredient
             return addingIngredientResult;
+        }
+
+        //------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Retrieves a list of ingredients based on the provided list of ingredient IDs.
+        /// </summary>
+        /// <param name="ingredientListId">A list of integer IDs representing ingredients.</param>
+        /// <returns>
+        /// A response containing a list of ingredients if found; otherwise, a failure response indicating that the ingredient list was not found.
+        /// </returns>
+        public Response<List<Ingredient>> GetIngredientList(List<int> ingredientListId)
+        {
+            // Define a filter function to filter ingredients based on their IDs.
+            Func<Ingredient, bool> filterFunction = p => ingredientListId.Contains(p.Id);
+
+            // Retrieve specific ingredients from the repository based on the filter function.
+            List<Ingredient>? specificIngredients = _ingredientRepository.Get(filterFunction);
+
+            // If specific ingredients are not found, return a failure response.
+            if (specificIngredients is null)
+            {
+                return Response<List<Ingredient>>.CreateFailureMessage(Error.INGREDIENT_LIST_NOT_FOUND_MESSAGE);
+            }
+
+            // If specific ingredients are found, return a success response with the list of ingredients.
+            return Response<List<Ingredient>>.CreateSuccessMessage(specificIngredients, Success.INGREDIENT_LIST_FOUND_MESSAGE);
+        }
+
+        //------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Retrieves a paginated list of all pizzas.
+        /// </summary>
+        /// <param name="paginationDto">Pagination data.</param>
+        /// <returns>A response containing the paginated list of all pizzas.</returns>
+        /// <remarks>This method retrieves a paginated list of all pizzas based on the provided pagination data.
+        /// It delegates the retrieval of pizzas to the pizza ingredient repository and returns the response.</remarks>
+        public Response<ListPaginationDto<PizzaDetailDto>> GetAllPizza(PaginationDto paginationDto)
+        {
+            // Retrieve a paginated list of all pizzas
+            ListPaginationDto<PizzaDetailDto> pizzaDetailList = _pizzaIngredientRepository.GetAllPizzaWithPagination(paginationDto.Page, paginationDto.PageResult);
+
+            // Check if the pizza list is null
+            if (pizzaDetailList is null)
+            {
+                // If the pizza list is null, return a failure response
+                return Response<ListPaginationDto<PizzaDetailDto>>.CreateFailureMessage(Error.PIZZA_LIST_NOT_FOUND_MESSAGE);
+            }
+
+            // If the pizza list is not null, return a success response with the pizza list
+            return Response<ListPaginationDto<PizzaDetailDto>>.CreateSuccessMessage(pizzaDetailList, Success.PIZZA_LIST_FOUND_MESSAGE);
+        }
+
+        /// <summary>
+        /// Retrieves a paginated list of pizzas based on the specified pizza name.
+        /// </summary>
+        /// <param name="pizzaNameDto">Data containing the pizza name and pagination details.</param>
+        /// <returns>A response containing the paginated list of pizzas matching the specified pizza name.</returns>
+        /// <remarks>This method retrieves a paginated list of pizzas based on the specified pizza name and pagination details.
+        /// It delegates the retrieval of pizzas to the pizza repository and returns the response.</remarks>
+        public Response<ListPaginationDto<PizzaDetailDto>> GetSpecificPizzaByName(PizzaNameDto pizzaNameDto)
+        {
+            // Retrieve a paginated list of pizzas based on the specified pizza name
+            ListPaginationDto<PizzaDetailDto> pizzaDetailList = _pizzaRepository.GetSpecificPizzaByName(pizzaNameDto.PizzaName, pizzaNameDto.PaginationDto.Page, pizzaNameDto.PaginationDto.PageResult);
+
+            // Check if the pizza list is null
+            if (pizzaDetailList is null)
+            {
+                // If the pizza list is null, return a failure response
+                return Response<ListPaginationDto<PizzaDetailDto>>.CreateFailureMessage(Error.PIZZA_LIST_NOT_FOUND_MESSAGE);
+            }
+
+            // If the pizza list is not null, return a success response with the pizza list
+            return Response<ListPaginationDto<PizzaDetailDto>>.CreateSuccessMessage(pizzaDetailList, Success.PIZZA_LIST_FOUND_MESSAGE);
+        }
+
+        /// <summary>
+        /// Retrieves details of a specific pizza based on the provided pizza ID.
+        /// </summary>
+        /// <param name="pizzaIdDto">Data transfer object containing the pizza ID.</param>
+        /// <returns>
+        /// A response object containing details of the specific pizza.
+        /// If the pizza is found, returns a successful response with the pizza details.
+        /// If the pizza is not found, returns a failure response with an appropriate error message.
+        /// </returns>
+        public Response<PizzaDetailDto> GetSpecificPizzaById(PizzaIdDto pizzaIdDto)
+        {
+            // Retrieve details of the specific pizza based on the provided pizza ID
+            PizzaDetailDto pizzaDetailDto = _pizzaRepository.GetSpecificPizzaById(pizzaIdDto.PizzaId);
+
+            // Check if the retrieved pizza details are null
+            if (pizzaDetailDto is null)
+            {
+                // If the pizza details are null, return a failure response with an appropriate error message
+                return Response<PizzaDetailDto>.CreateFailureMessage(Error.PIZZA_NOT_FOUND_MESSAGE);
+            }
+
+            // If the pizza details are not null, return a success response with the pizza details
+            return Response<PizzaDetailDto>.CreateSuccessMessage(pizzaDetailDto, Success.PIZZA_FOUND_MESSAGE);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace pizzaorder.Data.Services.Pagination
                 // Create a pagination result containing the list of items, current page, page count, and total item count
                 ListPaginationDto<T> paginationResult = new ListPaginationDto<T>()
                 {
-                    ListOfSomething = desiredList,
+                    Items = desiredList,
                     CurrentPage = page,
                     PageCount = (int)Math.Ceiling((totalItem / pageResult)),
                     TotalItem = totalItem

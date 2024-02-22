@@ -11,5 +11,7 @@
 
         //Pizza
         public const string PIZZA_ADDED_SUCCESS_MESSAGE = "Pizza successfully be added.";
+        public const string PIZZA_LIST_FOUND_MESSAGE = "Pizza list successfully retrieved.";
+        public const string PIZZA_FOUND_MESSAGE = "Pizza successfully retrieved.";
     }
 }

@@ -93,6 +93,7 @@ namespace PizzaOrderAPI.Data.Repositories.RepositoriesBase
                 return default(T);
             }
         }
+
         // Queries for an entity that satisfies both given conditions and returns it.
         public T? GetSingleByMethod(Func<T, bool> method, Func<T, bool> method2)
         {

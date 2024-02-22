@@ -1,4 +1,6 @@
-﻿using PizzaOrder.Data.Models;
+﻿using pizzaorder.Data.DTOs.Pagination;
+using pizzaorder.Data.DTOs.Pizza;
+using PizzaOrder.Data.Models;
 using PizzaOrderAPI.Data.Repositories.RepositoriesBase;
 using System;
 using System.Collections.Generic;
@@ -12,5 +14,7 @@ namespace PizzaOrderAPI.Data.Repositories.Pizzas
     {
         public bool IsPizzaExist(string pizzaName);
         public Pizza CreatePizza(Pizza pizza, List<int> ingredientIdList);
+        public ListPaginationDto<PizzaDetailDto> GetSpecificPizzaByName(string pizzaName, int page, float pageResult);
+        public PizzaDetailDto? GetSpecificPizzaById(int pizzaId);
     }
 }

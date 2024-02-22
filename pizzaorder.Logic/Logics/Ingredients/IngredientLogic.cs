@@ -41,19 +41,18 @@ namespace PizzaOrderAPI.Logic.Logics.Ingredients
             return ingredientDetailResponse;
         }
 
-
         /// <summary>
         /// Retrieves a paginated and filtered list of ingredients based on the provided parameters.
         /// </summary>
         /// <param name="ingredientTypeDto">Ingredient type parameters.</param>
         /// <returns>A response containing the paginated and filtered list of ingredients.</returns>
-        public Response<ListPaginationDto<Ingredient>> GetIngredient(IngredientTypeDto ingredientTypeDto)
+        public Response<ListPaginationDto<Ingredient>> GetAllIngredient(IngredientTypeDto ingredientTypeDto)
         {
             // Define the filter function based on ingredient type
             Func<Ingredient, bool> filterFunc = i => i.Type == ingredientTypeDto.Type;
 
             // Retrieve the ingredient list with pagination
-            List<Ingredient>? ingredientList = _repository.GetWithPagination(filterFunc, ingredientTypeDto.Page, ingredientTypeDto.PageResult);
+            List<Ingredient>? ingredientList = _repository.GetWithPagination(filterFunc, ingredientTypeDto.PaginationDto.Page, ingredientTypeDto.PaginationDto.PageResult);
 
             // Check if the ingredient list is null
             if (ingredientList is null)
@@ -62,10 +61,10 @@ namespace PizzaOrderAPI.Logic.Logics.Ingredients
             }
 
             // Retrieve the paginated and filtered list of ingredients using pagination service
-            ListPaginationDto<Ingredient> paginationResult = _paginationService.GetItemsWithPagination(filterFunc, ingredientTypeDto.Page, ingredientTypeDto.PageResult);
+            ListPaginationDto<Ingredient> paginationResult = _paginationService.GetItemsWithPagination(filterFunc, ingredientTypeDto.PaginationDto.Page, ingredientTypeDto.PaginationDto.PageResult);
 
             // Check if the retrieved list is empty
-            bool isListEmpty = paginationResult.ListOfSomething.Count == 0;
+            bool isListEmpty = paginationResult.Items.Count == 0;
             if (isListEmpty)
             {
                 return Response<ListPaginationDto<Ingredient>>.CreateFailureMessage(Error.LIST_NOT_FOUND_MESSAGE);
@@ -73,6 +72,18 @@ namespace PizzaOrderAPI.Logic.Logics.Ingredients
 
             // Return a success response with the paginated and filtered list of ingredients
             return Response<ListPaginationDto<Ingredient>>.CreateSuccessMessage(paginationResult, Success.LIST_FOUND_MESSAGE);
+        }
+
+        /// <summary>
+        /// Retrieves a list of ingredients based on the provided list of ingredient IDs.
+        /// </summary>
+        /// <param name="ingredientIdList">A list of integer IDs representing ingredients.</param>
+        /// <returns>A response containing a list of ingredients.</returns>
+        public Response<List<Ingredient>> GetIngredientList(List<int> ingredientIdList)
+        {
+            // Call the pizza service to get the list of ingredients based on the provided IDs.
+            Response<List<Ingredient>> response = _pizzaService.GetIngredientList(ingredientIdList);
+            return response;
         }
 
     }

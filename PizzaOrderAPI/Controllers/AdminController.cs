@@ -39,19 +39,7 @@ namespace PizzaOrderAPI.Controllers
                 return BadRequest(new Response<Exception> { Message = ex.Message, Progress = false });
             }
         }
-        [HttpPost]
-        public ActionResult<Response<List<Ingredient>>> GetIngredientList([FromForm] List<Ingredient> ingredientList)
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                // If an exception occurs, return a BadRequest result with an exception response
-                return BadRequest(new Response<Exception> { Message = ex.Message, Progress = false });
-            }
-        }
+
         [HttpPost, Authorize(Roles = $"{Role.MANAGER}")]
         public ActionResult<Response<IngredientDetailDto>> AddIngredient([FromForm] IngredientDto ingredientDto)
         {
@@ -67,20 +55,6 @@ namespace PizzaOrderAPI.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = $"{Role.MANAGER}")]
-        public ActionResult<Response<ListPaginationDto<Ingredient>>> GetAllIngredient([FromBody] IngredientTypeDto ingredientTypeDto)
-        {
-            try
-            {
-                Response<ListPaginationDto<Ingredient>> response = _ingredientLogic.GetIngredient(ingredientTypeDto);
-                
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                // If an exception occurs, return a BadRequest result with an exception response
-                return BadRequest(new Response<Exception> { Message = ex.Message, Progress = false });
-            }
-        }
+     
     }
 }

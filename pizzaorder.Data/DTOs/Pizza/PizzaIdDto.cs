@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaOrderAPI.Services.Login
+namespace pizzaorder.Data.DTOs.Pizza
 {
-    public interface ILoginService
+    public class PizzaIdDto
     {
+        public int PizzaId { get; set; }
     }
 }

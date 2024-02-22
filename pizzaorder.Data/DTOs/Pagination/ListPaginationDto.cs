@@ -9,7 +9,7 @@ namespace pizzaorder.Data.DTOs.Pagination
 {
     public class ListPaginationDto<T>
     {
-        public List<T> ListOfSomething { get; set; } = null!;
+        public List<T> Items { get; set; } = null!;
         public int CurrentPage { get; set; }
         public int PageCount { get; set; }
         public int TotalItem { get; set; }
